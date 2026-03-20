@@ -130,6 +130,13 @@
   .badge{font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,.06);color:var(--muted);padding:3px 7px;border-radius:5px;margin-left:auto}
   .soon-sub{text-align:center;font-size:.6875rem;color:var(--muted);font-style:italic;margin-top:-4px;opacity:.4}
 
+  /* EMAIL GATE */
+  .link-btn.locked{opacity:.4;pointer-events:none;filter:grayscale(.3)}
+  .email-gate-label{text-align:center;font-size:.6875rem;color:var(--muted);margin-bottom:-4px;display:flex;align-items:center;justify-content:center;gap:5px}
+  .email-gate-label svg{width:12px;height:12px;opacity:.5}
+  .inline-email-form.done .inline-email-btn{background:#22c55e;pointer-events:none}
+  .inline-email-form.done .modal-input{border-color:rgba(34,197,94,.3);opacity:.5;pointer-events:none}
+
   .modal-input{width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:.8125rem;font-family:inherit;background:rgba(255,255,255,.04);color:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
   .modal-input:focus{border-color:var(--telegram);box-shadow:0 0 0 3px rgba(42,171,238,.1)}
   .modal-input::placeholder{color:rgba(255,255,255,.2)}
@@ -226,13 +233,14 @@
   <div class="links reveal">
 
     <!-- INLINE EMAIL CAPTURE -->
+    <p class="email-gate-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Entre ton email pour débloquer l'accès</p>
     <form class="inline-email-form" id="inlineEmailForm">
       <input class="modal-input" type="email" id="inlineEmail" placeholder="Ton meilleur email" required autocomplete="email">
-      <button class="inline-email-btn" type="submit">Recevoir l'accès</button>
+      <button class="inline-email-btn" type="submit">Débloquer</button>
     </form>
 
     <!-- ACCES PRIVE — HERO CTA -->
-    <button class="link-btn premium" id="premiumBtn" type="button" data-url="go.html">
+    <button class="link-btn premium locked" id="premiumBtn" type="button" data-url="go.html">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       <span>Accès Privé — 47€/mois</span>
       <span class="premium-badge">Populaire</span>
@@ -240,7 +248,7 @@
     <p class="premium-hint">Annulable à tout moment — Satisfait ou remboursé 7j</p>
 
     <!-- ACCES GRATUIT -->
-    <button class="link-btn telegram" id="telegramBtn" type="button" data-url="telegram.html">
+    <button class="link-btn telegram locked" id="telegramBtn" type="button" data-url="telegram.html">
       <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
       <span>Accès gratuit — Telegram</span>
     </button>
@@ -381,10 +389,28 @@
   function getEmails(){try{return JSON.parse(localStorage.getItem('lexpertia_emails')||'[]')}catch(e){return[]}}
   function storeEmail(e){var em=getEmails();if(em.indexOf(e)===-1){em.push(e);localStorage.setItem('lexpertia_emails',JSON.stringify(em))}return em.length}
 
-  /* ---- INLINE EMAIL FORM ---- */
+  /* ---- EMAIL GATE + INLINE FORM ---- */
   var inlineForm=document.getElementById('inlineEmailForm');
   var inlineEmail=document.getElementById('inlineEmail');
   var inlineBtn=inlineForm.querySelector('.inline-email-btn');
+  var premiumBtn=document.getElementById('premiumBtn');
+  var telegramBtn=document.getElementById('telegramBtn');
+  var gateLabel=document.querySelector('.email-gate-label');
+
+  function unlockButtons(){
+    premiumBtn.classList.remove('locked');
+    telegramBtn.classList.remove('locked');
+    inlineForm.classList.add('done');
+    if(gateLabel)gateLabel.style.display='none';
+  }
+
+  // If user already submitted email before, unlock immediately
+  var existingEmails=getEmails();
+  if(existingEmails.length>0){
+    unlockButtons();
+    inlineBtn.textContent='\u2713 D\u00e9bloqu\u00e9';
+    inlineEmail.value=existingEmails[existingEmails.length-1];
+  }
 
   inlineForm.addEventListener('submit',function(e){
     e.preventDefault();
@@ -393,13 +419,12 @@
     inlineBtn.textContent='Envoi...';inlineBtn.disabled=true;
     var total=storeEmail(email);
     console.log('[LEXPERTIA]',email,'| Total:',total);
-    fetch(FORMSUBMIT_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email:email,_subject:'Nouveau lead — '+email,_template:'table',source:'lexpert-ia',date:new Date().toISOString()})}).then(function(r){return r.json()}).then(function(){done()}).catch(function(){done()});
+    fetch(FORMSUBMIT_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email:email,_subject:'Nouveau lead \u2014 '+email,_template:'table',source:'lexpert-ia',date:new Date().toISOString()})}).then(function(r){return r.json()}).then(function(){done()}).catch(function(){done()});
     function done(){
-      inlineBtn.textContent='\u2713 Re\u00e7u !';inlineBtn.classList.add('success');fireConfetti();
-      setTimeout(function(){
-        if(CAPTURE_URL&&CAPTURE_URL!=='#capture-mail'){window.open(CAPTURE_URL,'_blank','noopener')}
-        setTimeout(function(){inlineEmail.value='';inlineBtn.textContent='Recevoir l\u2019acc\u00e8s';inlineBtn.disabled=false;inlineBtn.classList.remove('success')},500);
-      },1200);
+      inlineBtn.textContent='\u2713 D\u00e9bloqu\u00e9 !';
+      inlineBtn.disabled=false;
+      unlockButtons();
+      fireConfetti();
     }
   });
 
@@ -421,8 +446,14 @@
   if(window.innerWidth<=768){setTimeout(function(){if(!stickyShown){stickyShown=true;sticky.classList.add('show')}},3000)}
 
   /* ---- LINK BUTTONS — navigate to intermediate pages ---- */
-  document.getElementById('premiumBtn').addEventListener('click',function(){window.location.href=this.getAttribute('data-url')});
-  document.getElementById('telegramBtn').addEventListener('click',function(){window.location.href=this.getAttribute('data-url')});
+  premiumBtn.addEventListener('click',function(){
+    if(this.classList.contains('locked')){inlineEmail.focus();inlineEmail.scrollIntoView({behavior:'smooth',block:'center'});return}
+    window.location.href=this.getAttribute('data-url');
+  });
+  telegramBtn.addEventListener('click',function(){
+    if(this.classList.contains('locked')){inlineEmail.focus();inlineEmail.scrollIntoView({behavior:'smooth',block:'center'});return}
+    window.location.href=this.getAttribute('data-url');
+  });
 
   /* ---- RIPPLE ---- */
   document.querySelectorAll('.link-btn:not(.soon):not(.telegram)').forEach(function(btn){btn.addEventListener('click',function(e){ripple(e,this)})});
