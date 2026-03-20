@@ -51,20 +51,21 @@
   /* AVATAR */
   .avatar-wrapper{position:relative;width:80px;height:80px}
   .avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 40px var(--glow),0 8px 32px rgba(0,0,0,.4);position:relative;z-index:1}
-  .avatar-glow{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,var(--telegram),#8b5cf6,var(--telegram));opacity:.2;animation:glow-spin 6s linear infinite;z-index:0}
+  .avatar-glow{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,var(--telegram),#8b5cf6,var(--telegram));opacity:.2;animation:glow-spin 6s linear infinite,glow-pulse 3s ease-in-out infinite;z-index:0}
   @keyframes glow-spin{to{transform:rotate(360deg)}}
+  @keyframes glow-pulse{0%,100%{opacity:.15;inset:-6px}50%{opacity:.3;inset:-10px}}
   .avatar-icon{width:32px;height:32px;color:var(--telegram);opacity:.9}
 
   /* IDENTITY */
   .identity{text-align:center}
-  .name{font-size:1.5rem;font-weight:700;letter-spacing:-.03em;line-height:1.15;background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.7) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .name{font-size:1.5rem;font-weight:700;letter-spacing:-.03em;line-height:1.15;background:linear-gradient(90deg,#fff,var(--telegram),#a78bfa,#fff);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:name-gradient 6s ease infinite}
+  @keyframes name-gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   .tagline{margin-top:6px;font-size:.8125rem;color:var(--muted);font-weight:400;line-height:1.5}
 
-  /* TYPEWRITER */
-  .typewriter-wrap{text-align:center;min-height:22px;margin-top:2px}
-  .typewriter{font-size:.75rem;font-weight:600;color:var(--telegram);letter-spacing:.02em;display:inline}
-  .typewriter-cursor{display:inline-block;width:2px;height:14px;background:var(--telegram);margin-left:2px;vertical-align:middle;animation:cursor-blink .8s step-end infinite}
-  @keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+  /* SCRAMBLE TEXT */
+  .scramble-wrap{text-align:center;min-height:22px;margin-top:4px}
+  .scramble{font-size:.75rem;font-weight:600;color:var(--telegram);letter-spacing:.02em;display:inline}
+  .scramble .char-glyph{color:rgba(42,171,238,.4)}
 
   /* PROOF */
   .proof-bar{display:flex;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
@@ -213,7 +214,7 @@
     .avatar-glow,.modal-border{animation:none}
     .live-dot,.modal-urgency-dot{animation:none}
     .link-btn.telegram::after{animation:none;display:none}
-    .typewriter-cursor{animation:none}
+    .name{animation:none}
     #bgCanvas{display:none}
   }
 </style>
@@ -239,8 +240,8 @@
   <div class="identity reveal">
     <h1 class="name">L'Expert IA</h1>
     <p class="tagline">Monétise l'intelligence artificielle.<br>Avant tout le monde.</p>
-    <div class="typewriter-wrap">
-      <span class="typewriter" id="typewriter"></span><span class="typewriter-cursor"></span>
+    <div class="scramble-wrap">
+      <span class="scramble" id="scrambleEl"></span>
     </div>
   </div>
 
@@ -409,25 +410,54 @@
   var revEls=document.querySelectorAll('.reveal');
   for(var ri=0;ri<revEls.length;ri++)(function(el,i){setTimeout(function(){el.classList.add('visible')},80+i*90)})(revEls[ri],ri);
 
-  /* ---- TYPEWRITER ---- */
-  var twEl=document.getElementById('typewriter');
-  var twTexts=['1\u00e8re communaut\u00e9 francophone d\u00e9di\u00e9e \u00e0 la mon\u00e9tisation de l\'IA','Outils \u00b7 Strat\u00e9gies \u00b7 Revenus automatis\u00e9s','L\'IA ne remplacera pas tout le monde. Juste ceux qui attendent.'];
-  var twI=0,twC=0,twDel=false,twTimeout;
-  function typewrite(){
-    var txt=twTexts[twI];
-    if(!twDel){
-      twC++;
-      twEl.textContent=txt.substring(0,twC);
-      if(twC>=txt.length){twTimeout=setTimeout(function(){twDel=true;typewrite()},2200);return}
-      twTimeout=setTimeout(typewrite,45);
-    } else {
-      twC--;
-      twEl.textContent=txt.substring(0,twC);
-      if(twC<=0){twDel=false;twI=(twI+1)%twTexts.length;twTimeout=setTimeout(typewrite,400);return}
-      twTimeout=setTimeout(typewrite,25);
-    }
+  /* ---- TEXT SCRAMBLE (soulwire-inspired) ---- */
+  var scrambleEl=document.getElementById('scrambleEl');
+  var scrambleTexts=['1\u00e8re communaut\u00e9 francophone de mon\u00e9tisation IA','Outils \u00b7 Strat\u00e9gies \u00b7 Revenus automatis\u00e9s','L\'IA ne remplacera pas tout le monde. Juste ceux qui attendent.'];
+  var scrambleChars='!<>-_\\/[]{}=+*^?#$@%&~';
+  var scrambleIdx=0;
+
+  function TextScramble(el){
+    this.el=el;this.queue=[];this.frame=0;this.running=false;
   }
-  setTimeout(typewrite,1200);
+  TextScramble.prototype.setText=function(newText){
+    var self=this;
+    var oldText=this.el.textContent;
+    var length=Math.max(oldText.length,newText.length);
+    this.queue=[];
+    for(var i=0;i<length;i++){
+      var from=oldText[i]||'';
+      var to=newText[i]||'';
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*20);
+      this.queue.push({from:from,to:to,start:start,end:end});
+    }
+    this.frame=0;
+    if(!this.running){this.running=true;this._update();}
+  };
+  TextScramble.prototype._update=function(){
+    var self=this;
+    var output='';var complete=0;
+    for(var i=0;i<this.queue.length;i++){
+      var q=this.queue[i];
+      if(this.frame>=q.end){complete++;output+=q.to;}
+      else if(this.frame>=q.start){
+        var c=scrambleChars[Math.floor(Math.random()*scrambleChars.length)];
+        output+='<span class="char-glyph">'+c+'</span>';
+      } else {output+=q.from;}
+    }
+    this.el.innerHTML=output;
+    if(complete<this.queue.length){
+      this.frame++;requestAnimationFrame(function(){self._update();});
+    } else {this.running=false;}
+  };
+
+  var scrambler=new TextScramble(scrambleEl);
+  function nextScramble(){
+    scrambler.setText(scrambleTexts[scrambleIdx]);
+    scrambleIdx=(scrambleIdx+1)%scrambleTexts.length;
+    setTimeout(nextScramble,4000);
+  }
+  setTimeout(nextScramble,1000);
 
   /* ---- COUNTERS ---- */
   var ctrs=document.querySelectorAll('[data-target]'),ctd=false;
