@@ -53,21 +53,6 @@
   .countdown-label{font-size:.6875rem;color:rgba(255,255,255,.5);font-weight:500}
   .countdown-time{font-size:.875rem;font-weight:700;font-variant-numeric:tabular-nums;color:#f87171;letter-spacing:.03em}
 
-  /* TESTIMONIALS */
-  .testimonials{width:100%;overflow:hidden;position:relative}
-  .testimonial-track{display:flex;transition:transform .5s var(--transition)}
-  .testimonial-card{min-width:100%;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-sizing:border-box}
-  .testimonial-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-  .testimonial-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.625rem;font-weight:700;color:#fff;flex-shrink:0}
-  .testimonial-info{display:flex;flex-direction:column}
-  .testimonial-name{font-size:.75rem;font-weight:600;color:#fff}
-  .testimonial-role{font-size:.5625rem;color:var(--muted)}
-  .testimonial-stars{margin-left:auto;font-size:.625rem;letter-spacing:1px;color:#fbbf24}
-  .testimonial-text{font-size:.75rem;color:rgba(255,255,255,.55);line-height:1.5;font-style:italic}
-  .testimonial-dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
-  .testimonial-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .3s}
-  .testimonial-dot.active{background:var(--telegram);transform:scale(1.3)}
-
   .container{position:relative;z-index:1;width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center;gap:20px}
 
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--transition),transform .6s var(--transition)}
@@ -92,13 +77,6 @@
   .scramble{font-size:.75rem;font-weight:600;color:var(--telegram);letter-spacing:.02em;display:inline}
   .scramble .char-glyph{color:rgba(42,171,238,.4)}
 
-  /* PROOF */
-  .proof-bar{display:flex;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-  .proof-item{flex:1;text-align:center;padding:12px 6px;position:relative}
-  .proof-item+.proof-item::before{content:'';position:absolute;left:0;top:22%;height:56%;width:1px;background:var(--border)}
-  .proof-number{font-size:1.0625rem;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1}
-  .proof-label{font-size:.5rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px;font-weight:500}
-
   /* TIP CARD — GAME CHANGER */
   .tip-card{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:flex-start;gap:12px;transition:all .5s var(--transition);cursor:default}
   .tip-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,rgba(42,171,238,.15),rgba(139,92,246,.15));display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -122,25 +100,22 @@
   .link-btn:active{transform:translateY(0) scale(.98);transition:transform .1s}
   .link-btn .icon{width:18px;height:18px;flex-shrink:0}
 
-  /* TELEGRAM */
-  .link-btn.telegram{background:var(--telegram);color:#fff;border:none;padding:18px 24px;font-size:1rem;font-weight:600;box-shadow:0 4px 24px rgba(42,171,238,.3),0 0 60px rgba(42,171,238,.08);backdrop-filter:none;letter-spacing:-.01em;transition:all .2s var(--transition);will-change:transform}
-  .link-btn.telegram:hover{background:#1da1d9;box-shadow:0 8px 40px rgba(42,171,238,.4)}
-  .telegram-ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.15);transform:scale(0);animation:tg-ripple .6s ease-out forwards;pointer-events:none}
-  @keyframes tg-ripple{to{transform:scale(2.5);opacity:0}}
-  .link-btn.telegram .icon{width:20px;height:20px}
-  .link-btn.telegram::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);animation:shimmer 3.5s ease infinite;z-index:1;pointer-events:none}
   @keyframes shimmer{0%{left:-100%}35%{left:150%}100%{left:150%}}
-  .btn-badge{position:absolute;top:-1px;right:-1px;background:#22c55e;color:#fff;font-size:.5rem;font-weight:700;padding:3px 7px;border-radius:0 var(--radius) 0 8px;letter-spacing:.02em;z-index:2;box-shadow:0 2px 8px rgba(34,197,94,.4)}
-  .telegram-hint{text-align:center;font-size:.6875rem;color:var(--muted);margin-top:-4px;display:flex;align-items:center;justify-content:center;gap:5px}
-  .live-dot{width:5px;height:5px;background:#22c55e;border-radius:50%;animation:blink 1.8s ease infinite;box-shadow:0 0 6px rgba(34,197,94,.5)}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-  /* PREMIUM */
-  .link-btn.premium{border:1px solid rgba(249,168,37,.25);background:linear-gradient(135deg,rgba(249,168,37,.08),rgba(245,124,0,.06));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);gap:12px;padding:16px 20px;font-weight:600}
-  .link-btn.premium:hover{border-color:rgba(249,168,37,.45);background:linear-gradient(135deg,rgba(249,168,37,.15),rgba(245,124,0,.1));box-shadow:0 8px 32px rgba(249,168,37,.15);transform:translateY(-2px)}
-  .link-btn.premium .icon{color:#fbbf24}
-  .link-btn.premium .arrow-icon{margin-left:auto;width:16px;height:16px;color:rgba(255,255,255,.35);transition:all .3s}
-  .link-btn.premium:hover .arrow-icon{color:#fbbf24;transform:translateX(3px)}
+  /* TELEGRAM — secondary */
+  .link-btn.telegram{border:1px solid rgba(42,171,238,.2);background:rgba(42,171,238,.06);color:#fff;padding:14px 20px;font-size:.875rem;font-weight:500;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);gap:12px}
+  .link-btn.telegram:hover{border-color:rgba(42,171,238,.35);background:rgba(42,171,238,.12);box-shadow:0 8px 24px rgba(42,171,238,.1)}
+  .link-btn.telegram .icon{width:18px;height:18px;color:var(--telegram)}
+
+  /* PREMIUM — HERO CTA */
+  .link-btn.premium{position:relative;border:2px solid rgba(251,191,36,.35);background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(245,158,11,.08));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);gap:12px;padding:20px 24px;font-weight:700;font-size:1rem;letter-spacing:-.01em;box-shadow:0 4px 30px rgba(251,191,36,.15),0 0 60px rgba(251,191,36,.05)}
+  .link-btn.premium::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(251,191,36,.15),transparent);animation:shimmer 3.5s ease infinite;z-index:1;pointer-events:none}
+  .link-btn.premium:hover{border-color:rgba(251,191,36,.6);background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(245,158,11,.12));box-shadow:0 8px 40px rgba(251,191,36,.25),0 0 80px rgba(251,191,36,.08);transform:translateY(-3px)}
+  .link-btn.premium .icon{color:#fbbf24;width:20px;height:20px}
+  .premium-badge{position:absolute;top:-1px;right:-1px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-size:.5rem;font-weight:700;padding:3px 8px;border-radius:0 var(--radius) 0 8px;letter-spacing:.03em;z-index:2;box-shadow:0 2px 8px rgba(245,158,11,.4);text-transform:uppercase}
+  .premium-hint{text-align:center;font-size:.625rem;color:var(--muted);margin-top:-4px;opacity:.6}
+
+  /* TELEGRAM — secondary */
 
   /* YOUTUBE */
   .link-btn.youtube{gap:12px}
@@ -155,53 +130,9 @@
   .badge{font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,.06);color:var(--muted);padding:3px 7px;border-radius:5px;margin-left:auto}
   .soon-sub{text-align:center;font-size:.6875rem;color:var(--muted);font-style:italic;margin-top:-4px;opacity:.4}
 
-  /* ======================== MODAL ======================== */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;opacity:0;visibility:hidden;transition:all .35s var(--transition)}
-  .modal-overlay.active{opacity:1;visibility:visible}
-  .modal-wrapper{position:relative;width:100%;max-width:380px}
-  .modal-border{position:absolute;inset:-2px;border-radius:26px;background:conic-gradient(from var(--border-angle,0deg),var(--telegram),#8b5cf6,#ec4899,var(--telegram));animation:border-rotate 4s linear infinite;z-index:0;opacity:.5}
-  @keyframes border-rotate{to{--border-angle:360deg}}
-  @property --border-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
-  .modal{position:relative;z-index:1;background:#111;border-radius:24px;padding:32px 24px 24px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.6)}
-  .modal-close{position:absolute;top:12px;right:12px;width:28px;height:28px;border:none;background:rgba(255,255,255,.05);cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;border-radius:8px;transition:background .2s,color .2s;z-index:2}
-  .modal-close:hover{background:rgba(255,255,255,.1);color:#fff}
-
-  .modal-lock{margin-bottom:10px;display:flex;justify-content:center}
-  .sphere-3d{width:56px;height:56px;animation:sphere-float 3s ease-in-out infinite}
-  @keyframes sphere-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-  .modal-title{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;margin-bottom:3px;color:#fff}
-  .modal-subtitle{font-size:.6875rem;font-weight:600;color:var(--telegram);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-  .modal-desc{font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.55}
-  .modal-desc strong{color:rgba(255,255,255,.75);font-weight:600}
-
-  .modal-avatars{display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-  .modal-av{width:26px;height:26px;border-radius:50%;border:2px solid #111;margin-left:-7px;display:flex;align-items:center;justify-content:center;font-size:.5625rem;font-weight:700;color:#fff}
-  .modal-av:first-child{margin-left:0}
-  .modal-av-1{background:linear-gradient(135deg,#3b82f6,#2563eb)}
-  .modal-av-2{background:linear-gradient(135deg,#8b5cf6,#7c3aed)}
-  .modal-av-3{background:linear-gradient(135deg,#ec4899,#db2777)}
-  .modal-av-4{background:linear-gradient(135deg,#f59e0b,#d97706)}
-  .modal-av-5{background:linear-gradient(135deg,var(--telegram),#1a8ac2)}
-  .modal-av-count{margin-left:8px;font-size:.625rem;color:var(--muted);font-weight:500}
-
-  .modal-urgency{display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,.08);color:#f87171;font-size:.625rem;font-weight:600;padding:5px 12px;border-radius:20px;margin-bottom:14px;letter-spacing:.01em;cursor:default;transition:all .3s var(--transition)}
-  .modal-urgency:hover{background:rgba(239,68,68,.14)}
-  .modal-urgency .lock-icon{width:12px;height:12px;transition:transform .3s var(--transition)}
-  .modal-urgency:hover .lock-icon{transform:scale(1.2) rotate(-10deg)}
-
-  .modal-form{display:flex;flex-direction:column;gap:8px}
   .modal-input{width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:.8125rem;font-family:inherit;background:rgba(255,255,255,.04);color:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
   .modal-input:focus{border-color:var(--telegram);box-shadow:0 0 0 3px rgba(42,171,238,.1)}
   .modal-input::placeholder{color:rgba(255,255,255,.2)}
-
-  .modal-submit{width:100%;padding:13px;border:none;border-radius:12px;background:var(--telegram);color:#fff;font-size:.875rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .25s var(--transition);box-shadow:0 2px 16px rgba(42,171,238,.25)}
-  .modal-submit:hover{background:#1da1d9;box-shadow:0 4px 24px rgba(42,171,238,.4);transform:translateY(-1px)}
-  .modal-submit:active{transform:scale(.97)}
-  .modal-submit.success{background:#22c55e;box-shadow:0 2px 16px rgba(34,197,94,.3);pointer-events:none}
-
-  .modal-trust{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.04)}
-  .modal-trust span{font-size:.5rem;color:rgba(255,255,255,.18);display:flex;align-items:center;gap:3px}
-  .modal-trust svg{width:9px;height:9px;opacity:.35}
 
   /* ======================== STICKY MOBILE CTA ======================== */
   .sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:80;background:rgba(10,10,10,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:12px 16px;display:none;align-items:center;gap:10px;transform:translateY(100%);transition:transform .4s var(--transition)}
@@ -239,13 +170,11 @@
   }
   @media(prefers-reduced-motion:reduce){
     .reveal{transition:none;opacity:1;transform:none}
-    .avatar-glow,.modal-border{animation:none}
-    .live-dot,.modal-urgency-dot{animation:none}
-    .link-btn.telegram::after{animation:none;display:none}
+    .avatar-glow{animation:none}
+    .link-btn.premium::after{animation:none;display:none}
     .name{animation:none}
     #bgCanvas{display:none}
     .cursor-glow{display:none}
-    .testimonial-track{transition:none}
   }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -287,11 +216,11 @@
     </div>
   </div>
 
-  <!-- COUNTDOWN -->
+  <!-- COUNTDOWN — weekly cycle, closes Sunday 23:59 -->
   <div class="countdown-bar reveal" id="countdownBar">
-    <span class="countdown-icon">&#128293;</span>
-    <span class="countdown-label">Offre accès gratuit expire dans</span>
-    <span class="countdown-time" id="countdownTime">23:59:59</span>
+    <span class="countdown-icon">&#9200;</span>
+    <span class="countdown-label">Inscriptions privées ferment dans</span>
+    <span class="countdown-time" id="countdownTime">--:--:--</span>
   </div>
 
   <div class="links reveal">
@@ -302,19 +231,18 @@
       <button class="inline-email-btn" type="submit">Recevoir l'accès</button>
     </form>
 
+    <!-- ACCES PRIVE — HERO CTA -->
+    <a class="link-btn premium" id="premiumBtn" href="https://pipidersa.systeme.io/20c995e1" target="_blank" rel="noopener">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>Accès Privé — 47€/mois</span>
+      <span class="premium-badge">Populaire</span>
+    </a>
+    <p class="premium-hint">Annulable à tout moment — Satisfait ou remboursé 7j</p>
+
     <!-- ACCES GRATUIT -->
     <a class="link-btn telegram" id="telegramBtn" href="https://t.me/lexpertIA" target="_blank" rel="noopener">
       <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-      <span>Accès gratuit</span>
-      <span class="btn-badge">Gratuit</span>
-    </a>
-    <p class="telegram-hint"><span class="live-dot"></span> Communauté active — Telegram</p>
-
-    <!-- ACCES PRIVE -->
-    <a class="link-btn premium" href="https://pipidersa.systeme.io/20c995e1" target="_blank" rel="noopener">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span>Accès Privé — 47€/mois</span>
-      <svg class="icon arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>Accès gratuit — Telegram</span>
     </a>
 
     <!-- YOUTUBE -->
@@ -390,7 +318,7 @@
 
   /* ---- TEXT SCRAMBLE (soulwire-inspired) ---- */
   var scrambleEl=document.getElementById('scrambleEl');
-  var scrambleTexts=['1\u00e8re communaut\u00e9 francophone de mon\u00e9tisation IA','Outils \u00b7 Strat\u00e9gies \u00b7 Revenus automatis\u00e9s','L\'IA ne remplacera pas tout le monde. Juste ceux qui attendent.'];
+  var scrambleTexts=['Agents IA \u00b7 Automatisation \u00b7 Mon\u00e9tisation','Strat\u00e9gies rentables r\u00e9currentes','L\'IA ne remplacera pas tout le monde. Juste ceux qui attendent.'];
   var scrambleChars='!<>-_\\/[]{}=+*^?#$@%&~';
   var scrambleIdx=0;
 
@@ -496,16 +424,28 @@
   document.querySelectorAll('.link-btn:not(.soon):not(.telegram)').forEach(function(btn){btn.addEventListener('click',function(e){ripple(e,this)})});
   function ripple(e,el){var rect=el.getBoundingClientRect(),size=Math.max(rect.width,rect.height),r=document.createElement('span');r.className='ripple';r.style.width=r.style.height=size+'px';r.style.left=(e.clientX-rect.left-size/2)+'px';r.style.top=(e.clientY-rect.top-size/2)+'px';el.appendChild(r);r.addEventListener('animationend',function(){r.remove()})}
 
-  /* ---- COUNTDOWN (resets at midnight) ---- */
+  /* ---- COUNTDOWN (weekly — next Sunday 23:59) ---- */
   var countdownEl=document.getElementById('countdownTime');
+  function getNextSunday(){
+    var now=new Date();
+    var day=now.getDay(); // 0=Sun
+    var daysUntil=day===0?0:7-day;
+    var end=new Date(now);
+    end.setDate(end.getDate()+daysUntil);
+    end.setHours(23,59,59,999);
+    if(end<=now){end.setDate(end.getDate()+7)}
+    return end;
+  }
+  var sundayEnd=getNextSunday();
   function updateCountdown(){
     var now=new Date();
-    var end=new Date(now);end.setHours(23,59,59,999);
-    var diff=end-now;
-    var h=Math.floor(diff/3600000);
+    var diff=sundayEnd-now;
+    if(diff<=0){sundayEnd=getNextSunday();diff=sundayEnd-now}
+    var d=Math.floor(diff/86400000);
+    var h=Math.floor((diff%86400000)/3600000);
     var m=Math.floor((diff%3600000)/60000);
     var s=Math.floor((diff%60000)/1000);
-    countdownEl.textContent=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    countdownEl.textContent=(d>0?d+'j ':'')+(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
   }
   updateCountdown();setInterval(updateCountdown,1000);
 
