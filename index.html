@@ -164,6 +164,17 @@
 
   .footer{text-align:center;font-size:.5625rem;color:var(--muted);opacity:.25;letter-spacing:.02em;margin-top:8px}
 
+  /* IN-APP BROWSER BANNER */
+  .inapp-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#dc2626,#ea580c);padding:16px 20px;text-align:center;box-shadow:0 4px 20px rgba(220,38,38,.4);animation:banner-pulse 2s ease-in-out infinite}
+  @keyframes banner-pulse{0%,100%{box-shadow:0 4px 20px rgba(220,38,38,.4)}50%{box-shadow:0 4px 30px rgba(220,38,38,.6)}}
+  .inapp-banner.show{display:block}
+  .inapp-steps{display:flex;flex-direction:column;gap:6px;align-items:center}
+  .inapp-step{font-size:.9375rem;font-weight:700;color:#fff;line-height:1.4;letter-spacing:.01em}
+  .inapp-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(255,255,255,.2);border-radius:50%;font-size:.75rem;font-weight:800;margin-right:6px;vertical-align:middle}
+  .inapp-step .dots{font-size:1.25rem;letter-spacing:2px;font-weight:900;vertical-align:middle;background:rgba(255,255,255,.15);padding:1px 6px;border-radius:4px}
+  .inapp-arrow{font-size:1.1rem;opacity:.7;line-height:1}
+  body.has-banner{padding-top:130px}
+
   .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.1);transform:scale(0);animation:ripple-anim .5s ease-out forwards;pointer-events:none;z-index:1}
   @keyframes ripple-anim{to{transform:scale(2.5);opacity:0}}
 
@@ -191,6 +202,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- IN-APP BROWSER BANNER -->
+<div class="inapp-banner" id="inappBanner">
+  <div class="inapp-steps">
+    <span class="inapp-step"><span class="step-num">1</span> Appuie sur <span class="dots">&middot;&middot;&middot;</span> en haut à droite</span>
+    <span class="inapp-arrow">&darr;</span>
+    <span class="inapp-step"><span class="step-num">2</span> "Ouvrir dans le navigateur"</span>
+  </div>
+</div>
 
 <canvas id="bgCanvas"></canvas>
 <div class="orb orb-1"></div>
@@ -288,6 +308,12 @@
 
 <script>
 (function(){
+  /* ---- IN-APP BROWSER DETECTION ---- */
+  if(/Instagram|TikTok|musical_ly|BytedanceWebview|FBAN|FBAV|Snapchat|Line\//i.test(navigator.userAgent)){
+    document.getElementById('inappBanner').classList.add('show');
+    document.body.classList.add('has-banner');
+  }
+
   var FORMSUBMIT_URL='https://formsubmit.co/ajax/08ec602de2450203d517fd45deec4907';
   var CAPTURE_URL='https://pipidersa.systeme.io/35bd1645';
 
